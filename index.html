@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>猜数游戏</title>
+    <script src="./vue2_01.js"></script>
+    <style>
+        div#app{
+            width: 250px;
+            margin: 30px auto;
+            bottom:1px solid #666;
+            border-radius: 10px;
+            padding: 10px;
+        }
+        p{
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <div id="app">
+        <p><input type="text" placeholder="猜数游戏" v-model="guessed"></p>
+        <p>{{result}}</p>
+    </div>
+    <script>
+        let vm= new Vue({
+            el:"#app",
+            data:{
+                guessed:"",
+                Key:0
+            },
+            methods:{
+                setKey(){
+                     this.Key=Math.round(Math.random()*100);
+                     console.log(this.Key);
+                }
+            },
+            mounted() {
+                this.setKey();
+            },
+            computed:{
+                result(){
+                    const value=parseInt(this.guessed);
+
+                    if(isNaN(value))
+                        return "请猜一个1-100之间的整数";
+                    if(value===this.Key){
+                        this.setKey()
+                        return "恭喜猜测正确！";
+                    }
+                    if(value<this.Key)
+                        return "猜小了";
+
+                    return "猜大了";
+                }
+            }
+        })
+    </script>
+</body>
+</html>
